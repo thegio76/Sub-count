@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Live Subscriber Count</title>
+    <script>
+        async function fetchSubscriberCount() {
+            const apiKey = "AIzaSyCwBWvegq6phH5b6GApjX85EF6mLfrMPlA"; // Your API Key
+            const channelId = "UCBoD19TCBs4_uzJw_jnUOEQ"; // Your Channel ID
+            const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                document.getElementById('subscribers').innerText = data.items[0].statistics.subscriberCount;
+            } catch (error) {
+                console.error("Error fetching subscriber count:", error);
+                document.getElementById('subscribers').innerText = "Error!";
+            }
+        }
+
+        fetchSubscriberCount();
+    </script>
+</head>
+<body>
+    <h1>Subscribers: <span id="subscribers">Loading...</span></h1>
+</body>
+</html>
